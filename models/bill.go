@@ -1,8 +1,7 @@
 package models
 
 type Bill struct {
-	Customer
-	ID    uint
-	Item  []OrderItem
-	Total float64
+	ID    uint        `gorm:"primaryKey" json:"id"`
+	Items []OrderItem `gorm:"foreignKey:OrderID" json:"items"`
+	Total float64     `json:"total"`
 }
