@@ -9,14 +9,6 @@ import (
 	"main.go/models"
 )
 
-func getItemPrice(itemID uint) float64 {
-	db := config.GetDB()
-
-	item := models.Item{}
-	db.First(&item, itemID)
-	return item.Price
-}
-
 func GetItemByID(c *gin.Context) {
 	db := config.GetDB()
 	Item := models.Item{}

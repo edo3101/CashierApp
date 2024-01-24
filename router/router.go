@@ -20,6 +20,14 @@ func StartApp() *gin.Engine {
 		itemRouter.GET("/:id", controllers.GetItemByID)
 		itemRouter.GET("/items", controllers.GetAllItem)
 	}
+	customerRouter := r.Group("/customer")
+	{
+		customerRouter.POST("/create", controllers.CreateCustomer)
+	}
+	billRouter := r.Group("/bill")
+	{
+		billRouter.POST("/create", controllers.CreateBill)
+	}
 
 	return r
 }
