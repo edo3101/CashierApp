@@ -2,10 +2,14 @@ import React from "react";
 import ItemCard from "../components/ItemCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CustomerModal from "../components/CustomerModal";
 
 function Home() {
   const ItemURL = "http://localhost:5000/item/items";
 
+  const [showModal, setShowModal] = React.useState(true);
+
+  const customeName = localStorage.getItem('name')
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const handleItemClick = (id, name, price) => {
@@ -74,13 +78,23 @@ function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-3">
+      {showModal ? (
+        <CustomerModal setfalse={() => setShowModal(false)} showModal={showModal}></CustomerModal>
+      ) : null}
+      < div className="grid grid-cols-3">
         <div className="col-span-2 overflow-y-scroll h-screen">
           <div className='flex flex-row gap-8 flex-wrap px-5 py-5'>
             {items.length > 0 && renderItemsResults()}
           </div>
         </div>
         <div className="col-span-1">
+          <button
+            className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => setShowModal(true)}
+          >
+            new customer
+          </button>
           <div className="bg-white border rounded-lg shadow-lg px-6 py-8 max-w-md mx-auto mt-8">
             <h1 className="font-bold text-2xl my-4 text-center text-blue-600">KRP Services</h1>
             <div className="mb-2">
@@ -93,10 +107,7 @@ function Home() {
               </div>
               <div className="mb-8">
                 <h2 className="text-lg font-bold mb-4">Bill To:</h2>
-                <div className="text-gray-700 mb-2">John Doe</div>
-                <div className="text-gray-700 mb-2">123 Main St.</div>
-                <div className="text-gray-700 mb-2">Anytown, USA 12345</div>
-                <div className="text-gray-700">johndoe@example.com</div>
+                <div className="text-gray-700 mb-2">{customeName}</div>
               </div>
               <table className="w-full mb-8">
                 <thead>

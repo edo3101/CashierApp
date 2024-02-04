@@ -10,9 +10,13 @@ import (
 
 func CreateCustomer(c *gin.Context) {
 	db := config.GetDB()
-	newCustomer := models.Customer{}
+	Customer := models.Customer{}
 
-	err := db.Debug().Create(&newCustomer).Error
+	if err := c.ShouldBindJSON(&Customer); err != nil {
+		c.Status(http.StatusBadRequest)
+	}
+
+	err := db.Debug().Create(&Customer).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Bad Request",
@@ -20,5 +24,5 @@ func CreateCustomer(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusAccepted, newCustomer)
+	c.JSON(http.StatusAccepted, Customer)
 }

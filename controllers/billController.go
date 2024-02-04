@@ -10,14 +10,14 @@ import (
 
 func CreateBill(c *gin.Context) {
 	db := config.GetDB()
-	newBill := models.Bill{}
+	Bill := models.Bill{}
 
-	err := db.Create(&newBill).Error
+	err := db.Create(&Bill).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
-	c.JSON(http.StatusAccepted, newBill)
+	c.JSON(http.StatusAccepted, Bill)
 }
